@@ -12,6 +12,6 @@ A simple PHP-based web shell that allows users to **upload**, **view**, **delete
 ## Installation
 
 ### Requirements:
-- PHP 5.6 or higher
-- A web server (Apache, Nginx, etc.)
-- `ZipArchive` extension for PHP (for unzipping files)
+- PHP 5.6 or higher.
+- A web server (Apache, Nginx, etc.).
+- `ZipArchive` extension for PHP (for unzipping files).
