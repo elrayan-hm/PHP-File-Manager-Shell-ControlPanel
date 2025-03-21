@@ -14,9 +14,9 @@ if (strpos($current_dir, $base_dir) !== 0) {
 if (isset($_FILES['file'])) {
     $upload_file = $current_dir . '/' . basename($_FILES['file']['name']);
     if (move_uploaded_file($_FILES['file']['tmp_name'], $upload_file)) {
-        echo "<div class='alert success'>File uploaded successfully: " . htmlspecialchars($_FILES['file']['name']) . "</div>";
+        echo "<center><div class='alertsuccess'>File uploaded successfully: " . htmlspecialchars($_FILES['file']['name']) . "</div></center>";
     } else {
-        echo "<div class='alert error'>Failed to upload file.</div>";
+        echo "<center><div class='alerterror'>Failed to upload file.</div></center>";
     }
 }
 
@@ -103,6 +103,8 @@ $files = scandir($current_dir);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP File Manager</title>
     <style>
+        .alertsuccess {color:white;font-family: Arial, sans-serif; background-color:rgb(3, 177, 3); margin: 0; padding: 20px;}
+        .alerterror {color:white;font-family: Arial, sans-serif; background-color:rgb(177, 3, 3); margin: 0; padding: 20px;}
         body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; }
         .container { max-width: 800px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
         h2 { text-align: center; }
@@ -118,7 +120,7 @@ $files = scandir($current_dir);
         .button:hover { background: #0056b3; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(2px); justify-content: center; align-items: center; }
         .modal-content { background: #121212; padding: 40px; border-radius: 8px; max-width: 600px; width: 90%; color: #33ff33; font-family: 'Courier New', monospace; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); border: 1px solid #33ff33; }
-        .modal-content .close { color: #33ff33; font-size: 24px; cursor: pointer; position: absolute; top: 10px; right: 15px; }
+        .modal-content .close { color:rgb(202, 18, 12); font-size: 24px; cursor: pointer; position: absolute; top: 10px; right: 15px; }
         #commandInput { background: black; color: #33ff33; font-family: 'Courier New', monospace; width: 96%; padding: 10px; border: 1px solid #33ff33; border-radius: 5px; outline: none; margin-top: 15px; } 
         #commandInput::placeholder { color: #1aff1a; } .command-output { max-height: 300px; overflow-y: auto; background: #000; padding: 10px; border-radius: 5px; border: 1px solid #33ff33; margin-bottom: 15px; }
         .close { float: right; font-size: 24px; cursor: pointer; }
@@ -154,10 +156,12 @@ $files = scandir($current_dir);
                         </a>
                     <?php endif; ?>
                     <span class="actions">
-                        <a href="?delete=<?php echo urlencode($file); ?>" title="Delete">🗑️</a>
-                        <?php if (pathinfo($file, PATHINFO_EXTENSION) === 'zip'): ?>
-                            <a href="?unzip=<?php echo urlencode($file); ?>" title="Unzip">📦</a>
-                        <?php endif; ?>
+                    <a href="?path=<?php echo urlencode(str_replace($base_dir, '', $current_dir)); ?>&delete=<?php echo urlencode($file); ?>" title="Delete">🗑️</a>
+
+                    <?php if (pathinfo($file, PATHINFO_EXTENSION) === 'zip'): ?>
+                    <a href="?path=<?php echo urlencode(str_replace($base_dir, '', $current_dir)); ?>&unzip=<?php echo urlencode($file); ?>" title="Unzip">📦</a>
+                    <?php endif; ?>
+
                     </span>
                 </li>
             <?php endif; ?>
